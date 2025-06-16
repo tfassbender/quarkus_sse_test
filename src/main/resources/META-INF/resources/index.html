@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SSE Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      max-width: 600px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Live SSE Stream</h1>
+<ul id="event-list"></ul>
+
+<script>
+  const eventList = document.getElementById('event-list');
+
+  const source = new EventSource('/sse');
+  
+  source.addEventListener("random-json", event => {
+    const data = JSON.parse(event.data);
+    console.log("Received JSON:", data);
+	const li = document.createElement('li');
+    li.textContent = event.data;
+    eventList.appendChild(li);
+  });
+</script>
+
+</body>
+</html>
